@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tugas_6/Pages/main_page_12.dart';
 import 'package:flutter_tugas_6/container_lets_start.dart';
 import 'package:flutter_tugas_6/container_wp.dart';
 import 'package:flutter_tugas_6/title_wp.dart';
@@ -34,16 +35,21 @@ class _WelcomePage6State extends State<WelcomePage6> {
           TittleWelcome(),
           SizedBox(height: 10),
           ContainerLetsStart(), 
-          SizedBox(height: 20),
-          ClipRect(child: 
-          Image.asset("assets/images/women.jpg"),
-
-          )
+          SizedBox(height:20),
+          Container(
+              width: 400,
+              height: 200,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16),
+                image: DecorationImage(
+                  image: AssetImage("assets/images/women.jpg"),
+                  fit: BoxFit.cover,
+                ),
+  ),
+)
           ],),
         ),
-      
       ))
-      
           );
   }
 }

@@ -39,7 +39,7 @@ class _Tugas6Dday11State extends State<Tugas6Dday11> {
         TextField(
               decoration: InputDecoration(
                 labelText: "Password",
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
+                border: OutlineInputBorder(borderRadius: BorderRadius.circular(15),),
               ),
             ),
         SizedBox(height: 15),

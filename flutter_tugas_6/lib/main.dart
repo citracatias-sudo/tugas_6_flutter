@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tugas_6/Pages/main_page_12.dart';
 import 'package:flutter_tugas_6/welcome_page.dart';
 
 void main() {
@@ -31,7 +32,7 @@ class MyApp extends StatelessWidget {
         // tested with just a hot reload.
         colorScheme: .fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: WelcomePage6()
+      home: MainPageDay12()
     );
   }
 }

@@ -16,10 +16,11 @@ decoration: BoxDecoration(
   borderRadius: BorderRadius.circular(25),
   color: Colors.white,
 ),//box decoration
-    child: Column(
+    child: Row(
   mainAxisSize: MainAxisSize.min,
   children: [
     Icon(Icons.auto_awesome, size: 16, color: Colors.pink), 
+    SizedBox(width: 5),
     Text("Your Safe Space Awaits", style: TextStyle(fontSize: 13),
     ),
   ], 

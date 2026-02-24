@@ -9,7 +9,12 @@ class Kosong6
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Sudah berhasil login"),
+        title: Text("login"),
+      ),
+      body: Column(
+        children: [
+          Text("Sudah berhasil login")
+        ],
       ),
       
     );
