@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
 
 class HomePageDay12 extends StatefulWidget {
   @override
@@ -11,7 +13,9 @@ class _HomePageDay12State extends State<HomePageDay12> {
   bool isDarkMode = false;
   String? selectedCategory;
   String selectedMenu = "checkbox";
-  DateTime ? selectedDate;
+
+  DateTime? selectedDate;
+  TimeOfDay? selectedTime;
 
   Color get textColor => isDarkMode ? Colors.white : Colors.black;
 
@@ -30,16 +34,14 @@ class _HomePageDay12State extends State<HomePageDay12> {
       ),
 
       drawer: SizedBox(
-        width: MediaQuery.of(context).size.width * 0.7,
+        width: MediaQuery.of(context).size.width * 0.5,
         child: Drawer(
           child: ListView(
             padding: EdgeInsets.zero,
             children: [
 
               DrawerHeader(
-                decoration: BoxDecoration(
-                  color: Colors.transparent,
-                ),
+                decoration: BoxDecoration(color: Colors.transparent),
                 child: Text(
                   "Navigation Menu",
                   style: TextStyle(fontSize: 20),
@@ -68,11 +70,33 @@ class _HomePageDay12State extends State<HomePageDay12> {
                 },
               ),
 
+              ListTile(
+                leading: Icon(Icons.date_range),
+                title: Text("Tanggal Lahir"),
+                onTap: () {
+                  Navigator.pop(context);
+                  setState(() {
+                    selectedMenu = "date";
+                  });
+                },
+              ),
+
+              ListTile(
+                leading: Icon(Icons.access_time),
+                title: Text("Atur Pengingat"),
+                onTap: () {
+                  Navigator.pop(context);
+                  setState(() {
+                    selectedMenu = "time";
+                  });
+                },
+              ),
+
               Divider(),
 
               ListTile(
                 leading: Icon(Icons.dark_mode),
-                title: Text("Mode Gelap"),
+                title: Text("Dark"),
                 trailing: Switch(
                   value: isDarkMode,
                   onChanged: (value) {
@@ -82,7 +106,6 @@ class _HomePageDay12State extends State<HomePageDay12> {
                   },
                 ),
               ),
-
             ],
           ),
         ),
@@ -97,11 +120,11 @@ class _HomePageDay12State extends State<HomePageDay12> {
 
   Widget buildBody() {
 
+    // CHECKBOX
     if (selectedMenu == "checkbox") {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-
           Row(
             children: [
               Checkbox(
@@ -120,9 +143,7 @@ class _HomePageDay12State extends State<HomePageDay12> {
               ),
             ],
           ),
-
           SizedBox(height: 10),
-
           Text(
             isAgree
                 ? "Lanjutkan pendaftaran"
@@ -131,37 +152,20 @@ class _HomePageDay12State extends State<HomePageDay12> {
               color: isAgree ? Colors.green : Colors.red,
             ),
           ),
-
-          SizedBox(height: 20),
-
-          ElevatedButton(
-            onPressed: isAgree ? () {} : null,
-            child: Text("Setuju dan lanjutkan"),
-          ),
         ],
       );
     }
 
+    // DROPDOWN
     if (selectedMenu == "dropdown") {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-
           Text(
             "Pilih Kategori Produk",
-            style: TextStyle(
-              fontSize: 18,
-              color: textColor,
-            ),
+            style: TextStyle(fontSize: 18, color: textColor),
           ),
-
-            // ElevatedButton(onPressed: () async {
-            // final DateTime?  await showDatePicker(context: context, firstDate: firstDate, lastDate: lastDate)
-            
-            // })
-          
           SizedBox(height: 15),
-
           DropdownButton<String>(
             value: selectedCategory,
             hint: Text("Pilih Kategori"),
@@ -182,12 +186,72 @@ class _HomePageDay12State extends State<HomePageDay12> {
               });
             },
           ),
-
           SizedBox(height: 15),
-
           if (selectedCategory != null)
             Text(
               "Anda memilih kategori: $selectedCategory",
+              style: TextStyle(color: textColor),
+            ),
+        ],
+      );
+    }
+
+    // DATE PICKER
+    if (selectedMenu == "date") {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      ElevatedButton(
+        onPressed: () async {
+          DateTime? picked = await showDatePicker(
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: DateTime(1900),
+            lastDate: DateTime(2100),
+          );
+
+          if (picked != null) {
+            setState(() {
+              selectedDate = picked;
+            });
+          }
+        },
+        child: Text("Pilih Tanggal Lahir"),
+      ),
+      SizedBox(height: 20),
+      if (selectedDate != null)
+        Text(
+          "Tanggal Lahir: ${DateFormat('dd MMMM yyyy', 'id_ID').format(selectedDate!)}",
+          style: TextStyle(color: textColor),
+        ),
+    ],
+  );
+}
+
+    // TIME PICKER
+    if (selectedMenu == "time") {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ElevatedButton(
+            onPressed: () async {
+              TimeOfDay? picked = await showTimePicker(
+                context: context,
+                initialTime: TimeOfDay.now(),
+              );
+
+              if (picked != null) {
+                setState(() {
+                  selectedTime = picked;
+                });
+              }
+            },
+            child: Text("Pilih Waktu Pengingat"),
+          ),
+          SizedBox(height: 20),
+          if (selectedTime != null)
+            Text(
+              "Pengingat diatur pukul: ${selectedTime!.format(context)}",
               style: TextStyle(color: textColor),
             ),
         ],
